@@ -62,7 +62,18 @@ public 폴더 => 사진이나 폰트 동영상 => 코드가 아닌 정적인 파
 Src 폴더 => 코드들 보관 => asset 폴더 => 리엑트 코드가 저장되는 보관소
 
 
-Npm run dev => 이걸로 리엑트 작동
+Npm run dev => 이걸로 리엑트 앱 가동
+q로 종료
+
+-------- React App 구동원리
+
+React Server에 요청을 해서 돌아감
+
+index.html => main.jsx => app.jsx => 화면에 렌더링
+
+
+
+
 
 
 
