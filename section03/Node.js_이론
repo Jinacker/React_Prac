@@ -27,7 +27,20 @@ zsh 터미널에서 => node @@@파일명.js => 이러면 실행됨
 폴더 안에 있을시 => node 폴더명/파일명.js
 
 => 나중에 파일 너무 많아진다.. => package.json => scripts 밑에 "start": "node 폴더명/파일명.js"
-=> 이러면 터미널에서 => start 쓰면 바로 동작 => start 말고 딴것도 가능.
+=> 이러면 터미널에서 => npm run start 쓰면 바로 동작 => start 말고 딴것도 가능.
+
+
+-------- Node js 모듈 시스템 이해하기
+
+모듈 시스템 => 모듈 다루는 시스템
+
+기능 === 모듈 => 파편화
+
+// ES Module 시스템 사용 => 먼저 package.json 에서 license 밑에 "type": "module" 넣기 
+// => 이게 내가 이 03 섹션에서는 ES 모듈 시스템을 사용하겠다는 뜻임.
+// ES module scope, you can use import instead => 이런 오류 뜬다? => 이러면 내가 모듈시스템을 헷갈리지 않았나 생각
+
+
 
 
 
