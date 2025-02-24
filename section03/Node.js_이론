@@ -40,6 +40,13 @@ zsh 터미널에서 => node @@@파일명.js => 이러면 실행됨
 // => 이게 내가 이 03 섹션에서는 ES 모듈 시스템을 사용하겠다는 뜻임.
 // ES module scope, you can use import instead => 이런 오류 뜬다? => 이러면 내가 모듈시스템을 헷갈리지 않았나 생각
 
+------- Node.js 라이브러리 사용하기
+
+https://www.npmjs.com/
+=> 노드js 라이브러리계의 백화점
+
+npm i randomcolor => zsh 터미널에서 실행해야함. => 이럼 라이브러리 다운됨.
+
 
 
 
