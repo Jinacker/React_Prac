@@ -9,7 +9,7 @@ import {useState} from "react";
 const Register = () => {
 
     // state 설정
-    const [name, setName] = useState("이름"); // 초기값 "이름"인 state 생성
+    const [name, setName] = useState(""); // 초기값 "이름"인 state 생성
     const [birth, setBirth] = useState("");
     const [country, setCountry] = useState("");
     const [bio, setBio] = useState("");
