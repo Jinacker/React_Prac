@@ -1,29 +1,41 @@
-
 import './App.css';
-import Header from "./components/Header.jsx";
-import Main from "./components/Main.jsx";
-import Footer from "./components/Footer.jsx";
-import Button from './components/Button.jsx';
+import {useState} from "react";
 
-function App() { // js 가 html 태그를 반환하도록 설정 => APP 컴포넌트
-  const buttonProps = {
-    text: "메일",
-    color: "red",
-    a: 1,
-    b: 2,
-    c: 3,
-  }; // 요런식으로 객체로 만들고 밑에 스프레드 연산자로 깔끔하게 값을 넘겨줄수있음.
+function App() { 
+  const [count, setCount]= useState(0); // 리턴값이 state(현재값)과 setState(변화시키는값)이다.
+  const [light, setLight] = useState("OFF");// 전구 껐다키기 state
+  // 여기서 의문을 가질수있음 => 그냥 변수로 쓰면 안되나? 꼭 State 써야되나?
+  // 리렌더링 될라면 State 써야됨 다른애 쓰면 가변적이지 않아서 바로바로 안바뀜.
 
   return (
-    <>
-    <Button {...buttonProps} />
-    <Button text = {"카페"}/>
-    <Button text = {"블로그"}>
-      <div>자식요소</div> 
-    </Button>
-    </>
-  ); // 이런식으로 Header는 자식 컴포넌트 / App은 부모 컴포넌트 
-  // => App 에서 불러와서 나타내는식으로 작동 => Header Main Footer 자식 컴포넌트  
+  <>
+    <div>
+      <h1>{light}</h1>
+      <button
+        onClick = {() => {
+          setLight(light === "OFF" ? "ON" : "OFF"); // 이걸로 껐따 킬수있게 상태 전달.
+        }}
+      > 
+      {(light === "ON" ? "OFF" : "ON")}
+      </button>
+
+
+
+    </div>
+
+    <div>
+    
+      <h1>{count}</h1>
+      <button 
+        onClick={() => {
+          setCount(count+1); // 이런식으로 state의 상태를 바꿔주며 "리렌더링"
+        }}
+    >
+      +
+      </button>
+    </div>
+  </>
+  );
 }
 
 export default App;
