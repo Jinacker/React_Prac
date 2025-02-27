@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useReducer } from 'react'
 import './App.css'
 import Header from "./components/Header.jsx";
 import Editor from "./components/Editor.jsx";
 import List from "./components/List.jsx";
-import Exam from './components/Exam.jsx';
+
 
 // 임시 데이터 => 객체 배열로 미리 만들어둠.
 const mockDate =[
@@ -27,50 +27,51 @@ const mockDate =[
   },
 ];
 
+function reducer(state, action) {
+  switch(action.type){
+    case "CREATE": return [action.data, ...state];
+    case "UPDATE": return state.map((item) => item.id === action.targetId ? {...item, isDone: !item.isDone} : item);
+    case "DELETE": return state.filter((item)=>item.id !== action.targetId);
+    default: state;
+  }
+}
+
 function App() {
-  const [todos, setTodos] = useState(mockDate); // todo 리스트 저장할 객체 배열.
+  const [todos, dispatch] = useReducer(reducer, mockDate); // useReducer 사용 => mockdata 초기값으로 넣어줌.
+
   const idRef = useRef(3); // 아이디용 Ref 생성 => 안겹치게 초기값 3
 
   const onCreate = (content) => { // 새로운 투두 리스트 업뎃
-    const newTodo = {
-      id: idRef.current++, // 아이디값 1씩 올라감 추가할때마다
-      isDone: false,
-      content: content,
-      date: new Date().getTime()
-    };
-    //todos.push(newTodo); // 일케 못함 => state 변수는 setTodo를 거쳐야함
-    setTodos([newTodo, ...todos]); // 이런식으로 스프레드로 넣어서 todos에 newTodo(우리가 입력한 값) 전달
-  };
+      dispatch({
+        type: "CREATE",
+        data: {
+          id: idRef.current++,
+          isDone: false,
+          content: content,
+          date: new Date().getTime(),
+        }
+      })
+     };
 
   const onUpdate = (targetId) => {
-    // todos State의 값들 중에
-    // targetId와 일치하는 id를 갖는 투두 아이템의 isDone 변경
-
-    // 인수: todos 배열에서 targetId와 일치하는 id를 갖는 요소의 데이터만 딱 바꾼 새로운 배열
-
-    setTodos(todos.map((todo)=> {
-      if(todo.id === targetId)
-      {
-        return {
-          ...todo, // 일단 todo 객체 요소 다 가져와서
-          isDone: !todo.isDone // 기존 요소 반대로 넣기 => 토글
-        }
-      }
-      return todo; // 삼항 연산자로 줄일수도 있다. 
-    }))
+    dispatch({
+      type: "UPDATE",
+      targetId: targetId,
+    })
   };
 
   const onDelete = (targetId) => {
-    //인수 : todos 배열에서 targetId와 일치하는 id를 갖는 요소만 삭제한 새로운 배열
-    setTodos(todos.filter((todo) => todo.id !== targetId));
-  };
+      dispatch({
+        type: "DELETE",
+        targetId: targetId,
+      })
+    };
   
   return (
     <div className = "App">
-      {/* <Header></Header>
+      <Header></Header>
       <Editor onCreate = {onCreate} ></Editor>
-      <List todos = {todos} onUpdate={onUpdate} onDelete = {onDelete}></List> */}
-      /<Exam></Exam>
+      <List todos = {todos} onUpdate={onUpdate} onDelete = {onDelete}></List>
     </div>
   )
 }
@@ -85,4 +86,4 @@ export default App
 
 // 음... 리엑트 => 데이터가 위에서 아래로 흐름. => 계층성 성질을 갖는다.
 
-// 기능을 만든 다음 다음 컴포넌트로 prop로 전달 => 이 컴포넌트에서 또 props로 세부 컴포넌트에 전달... 
+// app 컴포넌트에서 기능을 만든 다음 다음 컴포넌트로 prop로 전달 => 이 컴포넌트에서 또 props로 세부 컴포넌트에 전달... 
