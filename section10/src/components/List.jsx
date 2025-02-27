@@ -1,6 +1,6 @@
 import "./List.css"
 import TodoItem from "./TodoItem";
-import {useState} from "react";
+import {useState, useMemo} from "react";
 
 const List = ({ todos, onUpdate, onDelete }) => { // map함수와 콜백함수 이용해서 렌더링 => todo의 콘텐츠를 리스트 형태로 => 아예 컴포넌트 자체를 리턴할 수 도 있음.
     const [search, setSearch] = useState(""); // 검색용 state 생성.
@@ -22,7 +22,31 @@ const List = ({ todos, onUpdate, onDelete }) => { // map함수와 콜백함수 �
 
     const filteredTodos = getFilteredDate();
 
-    const getAnalyzedDate = () => {
+    // useMemo의 등장으로 기존 함수 필요없 => 지움
+
+    // const getAnalyzedDate = () => {
+    //     console.log("getAnalyzedData 호출!")
+    //     const totalCount = todos.length;
+    //     const doneCount = todos.filter((todo) => todo.isDone).length; // filter 메서드 => 호출될때마다 todo 전체를 순회 => 비효율적
+    //     const notDoneCount = totalCount - doneCount;
+
+    //     return {
+    //         totalCount,
+    //         doneCount,
+    //         notDoneCount
+    //     };
+    // };
+
+    // useMemo 훅!!!
+    // 현재 search 해도 게속 리렌더링됨 => 비효율적
+    // memo는 결국 => 내가 원하는 상태값이 바꼈을때만 해당 연산을 작동하게 할 수 있는 그런 용도이다.
+    // 구조분해 할당으로 값도 받을 수 있으니 좋다.
+
+    const {totalCount, doneCount, notDoneCount} = // 여기에 useMemo를 받는다
+    useMemo(() => {
+        // memoriztaion: 즉 기억하고 싶은 연산을 여기에 넣음 됨.
+
+        // 위에 analyzed 함수 연산부분 넣기
         console.log("getAnalyzedData 호출!")
         const totalCount = todos.length;
         const doneCount = todos.filter((todo) => todo.isDone).length; // filter 메서드 => 호출될때마다 todo 전체를 순회 => 비효율적
@@ -33,10 +57,13 @@ const List = ({ todos, onUpdate, onDelete }) => { // map함수와 콜백함수 �
             doneCount,
             notDoneCount
         };
-    };
+    }, [todos]) // 라이프 사이클때 배웠던 의존성배열: deps => 배열 내용 바뀌면 => 콜백함수 호출
+//이거 다 빈칸으로 냅두면 라이프 사이클에서 배웠듯 => 마운트 될때만 딱 한번 실행됨.  
+
+
 
     // 리렌더링 될때마다 함수 실행돼서 카운트 올라감.
-    const {totalCount, doneCount, notDoneCount} = getAnalyzedDate();
+    //const {totalCount, doneCount, notDoneCount} = getAnalyzedDate();
 
     return (
         <div className="List">
