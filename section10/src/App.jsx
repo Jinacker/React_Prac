@@ -1,4 +1,4 @@
-import { useState, useRef, useReducer } from 'react'
+import { useState, useRef, useReducer, useCallback } from 'react'
 import './App.css'
 import Header from "./components/Header.jsx";
 import Editor from "./components/Editor.jsx";
@@ -41,7 +41,7 @@ function App() {
 
   const idRef = useRef(3); // 아이디용 Ref 생성 => 안겹치게 초기값 3
 
-  const onCreate = (content) => { // 새로운 투두 리스트 업뎃
+  const onCreate = useCallback((content) => { // 새로운 투두 리스트 업뎃
       dispatch({
         type: "CREATE",
         data: {
@@ -51,21 +51,29 @@ function App() {
           date: new Date().getTime(),
         }
       })
-     };
+     },[]);
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
     })
-  };
+  },[]);
 
-  const onDelete = (targetId) => {
-      dispatch({
-        type: "DELETE",
-        targetId: targetId,
-      })
-    };
+  // const onDelete = (targetId) => {
+  //     dispatch({
+  //       type: "DELETE",
+  //       targetId: targetId,
+  //     })
+  //   };
+
+  // 원본 지우고 => 이런식으로 콜백 넣어서 마운트시 한번만 딱 렌더링 되고 다시 안되게 해버리기. (안에 내용 바뀔때만 렌더링되게 ㅇㅇ)
+  const onDelete = useCallback((targetId) => {
+    dispatch({
+      type: "DELETE",
+      targetId: targetId,
+    })
+  }, []); // 1 인수: 최적화하고 싶은 함수(불필요하게 렌더링 안하고 싶은 함수) 2: deps
   
   return (
     <div className = "App">
