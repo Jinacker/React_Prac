@@ -1,8 +1,11 @@
 import "./List.css"
 import TodoItem from "./TodoItem";
-import {useState, useMemo} from "react";
+import {useState, useMemo, useContext} from "react";
+import { TodoContext } from "../App";
 
-const List = ({ todos, onUpdate, onDelete }) => { // map함수와 콜백함수 이용해서 렌더링 => todo의 콘텐츠를 리스트 형태로 => 아예 컴포넌트 자체를 리턴할 수 도 있음.
+const List = () => { // map함수와 콜백함수 이용해서 렌더링 => todo의 콘텐츠를 리스트 형태로 => 아예 컴포넌트 자체를 리턴할 수 도 있음.
+    const {todos} = useContext(TodoContext); // Todos만 가져오기
+    
     const [search, setSearch] = useState(""); // 검색용 state 생성.
     
     const onChangeSearch = (e) => {
@@ -74,7 +77,7 @@ const List = ({ todos, onUpdate, onDelete }) => { // map함수와 콜백함수 �
 
             <input value = {search} onChange ={onChangeSearch} placeholder="검색어를 입력하세요"></input>
             <div className ="todos_wrapper">
-                {filteredTodos.map((todo)=>{return <TodoItem key = {todo.id} {...todo} onUpdate = {onUpdate} onDelete={onDelete}></TodoItem>})}
+                {filteredTodos.map((todo)=>{return <TodoItem key = {todo.id} {...todo}></TodoItem>})}
             </div>
         </div>
     ) // list로 넘겨 줄때 key값을 넣어서 줘야함. => 이래서 id값을 만든거. => 키값도 같이 전달해줘야함.

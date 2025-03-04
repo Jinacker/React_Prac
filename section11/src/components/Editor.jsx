@@ -1,7 +1,10 @@
 import "./Editor.css";
-import {useState, useRef} from "react";
+import {useState, useRef, useContext} from "react";
+import {TodoContext} from "../App";
 
-const Editor = ({onCreate}) => {
+const Editor = () => {
+
+    const {onCreate}= useContext(TodoContext); // Provide 받은 데이터 중에 onCreate만 필요해서 이거만 받음
 
     const [content, setContent] = useState(""); // 인풋 받는용 state
     const contentRef = useRef(); // 

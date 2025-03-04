@@ -1,4 +1,8 @@
-import { useState, useRef, useReducer, useCallback } from 'react'
+// props drilling을 해결하기 위한 Context 사용법 !!
+// 리액트의 props로 데이터를 주고 받으면 => 계층을 하나하나 따라 내려가야됨 => 컴포넌트가 많아지면... 유지 보수 힘듬 => 이게 props drilling
+// context를 이용하면 이제 하나씩 내려가면서 주는게 아니라, 바로 가져다 쓸수있게 줄수있음.
+
+import { useState, useRef, useReducer, useCallback, createContext } from 'react'
 import './App.css'
 import Header from "./components/Header.jsx";
 import Editor from "./components/Editor.jsx";
@@ -36,6 +40,9 @@ function reducer(state, action) {
   }
 }
 
+export const TodoContext = createContext(); // Context 객체 생성 => 컴포넌트 외부에 생성 => 왜 외부? => App이 리렌더링 될때마다 재생성될 필요가 없기 때문.
+console.log(TodoContext); // 얘도 사실 컴포넌트임
+
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockDate); // useReducer 사용 => mockdata 초기값으로 넣어줌.
 
@@ -60,14 +67,6 @@ function App() {
     })
   },[]);
 
-  // const onDelete = (targetId) => {
-  //     dispatch({
-  //       type: "DELETE",
-  //       targetId: targetId,
-  //     })
-  //   };
-
-  // 원본 지우고 => 이런식으로 콜백 넣어서 마운트시 한번만 딱 렌더링 되고 다시 안되게 해버리기. (안에 내용 바뀔때만 렌더링되게 ㅇㅇ)
   const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
@@ -78,11 +77,15 @@ function App() {
   return (
     <div className = "App">
       <Header></Header>
-      <Editor onCreate = {onCreate} ></Editor>
-      <List todos = {todos} onUpdate={onUpdate} onDelete = {onDelete}></List>
+      <TodoContext.Provider value = {{todos, onCreate, onUpdate, onDelete}}>
+
+      <Editor></Editor>
+      <List></List>
+      
+      </TodoContext.Provider>
     </div>
   )
-}
+} // </TodoContext.Provider 여기에 공급할 데이터들 넣음> => 이거로 감싸야 적용됨. => 이거에 감싸진건 이제 계층 상관없이 아무데서나 꺼내쓸수있게됨.
 
 export default App
 
