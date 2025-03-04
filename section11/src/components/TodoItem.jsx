@@ -1,12 +1,12 @@
 import "./TodoItem.css";
 import {memo, useContext} from "react";
-import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
 
 // 기본적으로 값 같다고 같은게 아니라 주소값을 기반으로 비교
 // 얘네도 결국 맨날 생성될때마다 다른 주소값으로 설정된겨 => 그래서 결국 바꼈기때문에 memo해도 계속 리렌더링된거.
 const TodoItem = ({id, isDone,content, date}) => { 
 
-    const {onUpdate, onDelete} = useContext(TodoContext); // context에서 필요한거만 꺼내오기.
+    const {onUpdate, onDelete} = useContext(TodoDispatchContext); // context에서 필요한거만 꺼내오기.
 
     const onChangeCheckbox = () => {onUpdate(id)}; // 체크박스용 이벤트 헨들러
 

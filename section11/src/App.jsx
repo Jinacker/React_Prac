@@ -2,7 +2,7 @@
 // 리액트의 props로 데이터를 주고 받으면 => 계층을 하나하나 따라 내려가야됨 => 컴포넌트가 많아지면... 유지 보수 힘듬 => 이게 props drilling
 // context를 이용하면 이제 하나씩 내려가면서 주는게 아니라, 바로 가져다 쓸수있게 줄수있음.
 
-import { useState, useRef, useReducer, useCallback, createContext } from 'react'
+import { useState, useRef, useReducer, useCallback, createContext, useMemo } from 'react'
 import './App.css'
 import Header from "./components/Header.jsx";
 import Editor from "./components/Editor.jsx";
@@ -40,8 +40,9 @@ function reducer(state, action) {
   }
 }
 
-export const TodoContext = createContext(); // Context 객체 생성 => 컴포넌트 외부에 생성 => 왜 외부? => App이 리렌더링 될때마다 재생성될 필요가 없기 때문.
-console.log(TodoContext); // 얘도 사실 컴포넌트임
+// Context 쓰면 다 좋은데... => 우리가 아까했던 최적화가 안먹힘 => 왜냐... 결국 객체가 다시 만들어지는거라 리렌더링 유발. => ConText를 분리해야한다.
+export const TodoStateContext = createContext(); // 변화할 값
+export const TodoDispatchContext = createContext(); // 변화안할 값
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockDate); // useReducer 사용 => mockdata 초기값으로 넣어줌.
@@ -74,19 +75,24 @@ function App() {
     })
   }, []); // 1 인수: 최적화하고 싶은 함수(불필요하게 렌더링 안하고 싶은 함수) 2: deps
   
+  const memorizedDispatch = useMemo(() => {return {onCreate,onUpdate,onDelete}},[]); 
+// 마운트 이후에 저 객체들이 다시 생성되지 않게 => useMemo와 deps[] 이용해서 리턴.
+
   return (
     <div className = "App">
       <Header></Header>
-      <TodoContext.Provider value = {{todos, onCreate, onUpdate, onDelete}}>
+      <TodoStateContext.Provider value = {todos}>
+      <TodoDispatchContext.Provider value = {memorizedDispatch}>
 
       <Editor></Editor>
       <List></List>
+
+      </TodoDispatchContext.Provider>
       
-      </TodoContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   )
-} // </TodoContext.Provider 여기에 공급할 데이터들 넣음> => 이거로 감싸야 적용됨. => 이거에 감싸진건 이제 계층 상관없이 아무데서나 꺼내쓸수있게됨.
-
+} // StateContext 안에 DispatchContext를 넣어서 Provider.
 export default App
 
 

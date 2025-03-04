@@ -1,10 +1,10 @@
 import "./List.css"
 import TodoItem from "./TodoItem";
 import {useState, useMemo, useContext} from "react";
-import { TodoContext } from "../App";
+import { TodoStateContext } from "../App";
 
 const List = () => { // map함수와 콜백함수 이용해서 렌더링 => todo의 콘텐츠를 리스트 형태로 => 아예 컴포넌트 자체를 리턴할 수 도 있음.
-    const {todos} = useContext(TodoContext); // Todos만 가져오기
+    const todos = useContext(TodoStateContext); // 이제 객체가 아니라 이렇게 받아야함.
     
     const [search, setSearch] = useState(""); // 검색용 state 생성.
     
