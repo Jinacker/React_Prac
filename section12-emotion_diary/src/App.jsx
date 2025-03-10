@@ -8,6 +8,11 @@
 // => 이걸 합해서 리액트 앱을 전송 => 따로 요청 없이 클라이언트 입장에서 필요한거만 뽑아와서 페이지 이동
 // 클라이언트 사이드 렌더링 => 공통 사항은 냅두고 필요한 컴포넌트만 불러옴 (효율적) / 클라이언트마다 리액트앱 받아서 각자 돌리는거라 트래픽 문제 x
 
+
+///////////////// 페이지의 동적 경로란? //////////////////
+// 1. URL Parameter => ~/product/1 => 아이템의 id등의 변경되지 않는 값을 주소로 명시 => 이번 다이어리 프로젝트에서 쓸 것.
+// 2. Query String => ~/search?q=검색어 => 검색어 등의 자주 변경되는 값을 주소로 명시하기 위해 사용
+
 import './App.css'
 // 함수에서 페이지 이동 훅 => useNavigate 
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'; // 라우터 import // 페이지 이동용 Link 컴포넌트 import
@@ -42,12 +47,12 @@ function App() {
     <Routes>
        <Route path = "/" element = {<Home></Home>}></Route>
        <Route path = "/new" element = {<New></New>}></Route>
-       <Route path = "/diary" element = {<Diary></Diary>}></Route>
+       <Route path = "/diary/:id" element = {<Diary></Diary>}></Route> 
        <Route path = "*" element = {<Notfound></Notfound>}></Route>
     </Routes>
     
     </>
-
+    // 주소에 /@@@@/:id => URL 파라미터를 쓰겠다고 선언하는거임 
   ) // path = "*" 은 스위치문의 default 같은거임 => 다 아니면 이거 실행됨.
 }
 
