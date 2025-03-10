@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -28,6 +29,9 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      "no-unused-vars": "off",
+      "react/prop-types": "off",
+      "react-refresh/only-export-components": "off",
     },
   },
 ]

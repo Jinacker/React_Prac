@@ -9,7 +9,8 @@
 // 클라이언트 사이드 렌더링 => 공통 사항은 냅두고 필요한 컴포넌트만 불러옴 (효율적) / 클라이언트마다 리액트앱 받아서 각자 돌리는거라 트래픽 문제 x
 
 import './App.css'
-import { Routes, Route } from 'react-router-dom'; // 라우터 import
+// 함수에서 페이지 이동 훅 => useNavigate 
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'; // 라우터 import // 페이지 이동용 Link 컴포넌트 import
 import Home from "./pages/Home.jsx";
 import Diary from "./pages/Diary.jsx";
 import New from "./pages/New.jsx";
@@ -21,14 +22,32 @@ import Notfound from "./pages/Notfound.jsx";
 // 3. "/diary" => 일기를 상세히 조회하는 Diary 페이지
 
 function App() {
+  const nav = useNavigate(); // 함수 생성.
+
+  const onClickButton = () => { // 이벤트 핸들러 생성. => 막 특정 조건 ex) 버튼 눌렀을때 페이지 이동하려면 이렇게 써야함.
+    nav("/new"); // nav 호출 하고 안에는 "/경로" 넣기
+  };
  
   return ( // 마치 스위치문처럼 찾아서 맞는거 페이지로서 화면에 렌더링.
+    // 요런식으로 Link로 원하는 페이지 이동하게 구축.
+    // 다 리렌더링 되는게 아니라 필요한 컴포넌트만 리렌더링돼서 굉장히 부드러움
+    // 기존의 라우팅 방식인 <a href = "/"> => 이거는 화면 전체가 깜빡 거리면서 전체가 리렌더링
+    <>
+    <div>
+      <Link to ={"/"}>Home</Link>
+      <Link to ={"/new"}>New</Link>
+      <Link to ={"/diary"}>Diary</Link>
+    </div>
+    <button onClick = {onClickButton}>New 페이지로 이동</button>
     <Routes>
        <Route path = "/" element = {<Home></Home>}></Route>
        <Route path = "/new" element = {<New></New>}></Route>
        <Route path = "/diary" element = {<Diary></Diary>}></Route>
        <Route path = "*" element = {<Notfound></Notfound>}></Route>
     </Routes>
+    
+    </>
+
   ) // path = "*" 은 스위치문의 default 같은거임 => 다 아니면 이거 실행됨.
 }
 
