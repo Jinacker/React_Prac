@@ -1,3 +1,8 @@
+// 프로젝트 개발 순서는 사람마다 다름
+// 페이지 라우팅 => 글로벌 레이아웃 설정 => 공통 컴포넌트 구현 => 개별 페이지 및 복잡한 기능 구현
+// 이 순서대로 가보자. 공통 컴포넌트를 먼저 구현하면 그냥 가져다가 바로 쓸수있어서 좋다함.
+
+
 // 라우터란... => 페이지 여러개 쓸수 있게 해줌
 // 설치법 터미널에 => " npm i react-router-dom "
 
@@ -20,6 +25,8 @@ import Home from "./pages/Home.jsx";
 import Diary from "./pages/Diary.jsx";
 import New from "./pages/New.jsx";
 import Notfound from "./pages/Notfound.jsx";
+import Button from './components/Button.jsx';
+import Header from './components/Header.jsx';
 
 // 이미지 쓰려면 이렇게 import해서 가져와야함.
 // import emotion1 from "./assets/emotion1.png";
@@ -48,7 +55,6 @@ function App() {
     // 다 리렌더링 되는게 아니라 필요한 컴포넌트만 리렌더링돼서 굉장히 부드러움
     // 기존의 라우팅 방식인 <a href = "/"> => 이거는 화면 전체가 깜빡 거리면서 전체가 리렌더링
 
-
     // public 폴더에 이미지 넣은경우 => 주소를 불러오는 방식으로 사용 => 근데 이렇게 하면 vite가 제공하는 이미지 최적화 기능이 안써짐.
     // src asset 폴더에 이미지 넣은경우 => import 해서 사용 => 나중에 보면 data URL로 저장돼서 한번 저장되면 다시 안불려짐(memory에 저장됨) => 최적화 자동으로됨!!!!
     // (중요) => 이미지가 적다 => asset에 저장 // 이미지가 많다 => 다 asset에 저장시 메모리 과부화 위험 => public에 저장.
@@ -64,20 +70,15 @@ function App() {
   //</div>
     
     <>
-    <div>
-    <img src = {getEmotionImage(1)}></img>
-    <img src = {getEmotionImage(2)}></img>
-    <img src = {getEmotionImage(3)}></img>
-    <img src = {getEmotionImage(4)}></img>
-    <img src = {getEmotionImage(5)}></img>
-    </div>
+    <Header title = {"Header"}
+    leftChild = {<Button text = {"Left"}></Button> }
+    rightChild = {<Button text = {"Right"}></Button> }
+    ></Header>
 
-    <div>
-      <Link to ={"/"}>Home</Link>
-      <Link to ={"/new"}>New</Link>
-      <Link to ={"/diary"}>Diary</Link>
-    </div>
-    <button onClick = {onClickButton}>New 페이지로 이동</button>
+    <Button text = {"123"} type = {"Default"} onClick ={() =>{console.log("123번 버튼 클릭")}}></Button>
+    <Button text = {"123"} type = {"POSITIVE"} onClick ={() =>{console.log("123번 버튼 클릭")}}></Button>
+    <Button text = {"123"} type = {"NEGATIVE"} onClick ={() =>{console.log("123번 버튼 클릭")}}></Button>
+    
     <Routes>
        <Route path = "/" element = {<Home></Home>}></Route>
        <Route path = "/new" element = {<New></New>}></Route>
