@@ -21,6 +21,16 @@ import Diary from "./pages/Diary.jsx";
 import New from "./pages/New.jsx";
 import Notfound from "./pages/Notfound.jsx";
 
+// 이미지 쓰려면 이렇게 import해서 가져와야함.
+// import emotion1 from "./assets/emotion1.png";
+// import emotion2 from "./assets/emotion2.png";
+// import emotion3 from "./assets/emotion3.png";
+// import emotion4 from "./assets/emotion4.png";
+// import emotion5 from "./assets/emotion5.png";
+// 근데 이렇게... 매번 import 하면 너무 번거롭고 지저분 => util 폴더를 만들고 거기에 이 import 해주는 파일을 분리. 
+import {getEmotionImage} from "./util/get-emotion-image.js"; //이거임 통합 !
+//getEmotionImage(1) 이런식으로 사용
+
 
 // 1. "/" => 모든 일기 조회하는 홈페이지
 // 2. "/new" => 새로운 일기 작성하는 New 페이지
@@ -37,7 +47,31 @@ function App() {
     // 요런식으로 Link로 원하는 페이지 이동하게 구축.
     // 다 리렌더링 되는게 아니라 필요한 컴포넌트만 리렌더링돼서 굉장히 부드러움
     // 기존의 라우팅 방식인 <a href = "/"> => 이거는 화면 전체가 깜빡 거리면서 전체가 리렌더링
+
+
+    // public 폴더에 이미지 넣은경우 => 주소를 불러오는 방식으로 사용 => 근데 이렇게 하면 vite가 제공하는 이미지 최적화 기능이 안써짐.
+    // src asset 폴더에 이미지 넣은경우 => import 해서 사용 => 나중에 보면 data URL로 저장돼서 한번 저장되면 다시 안불려짐(memory에 저장됨) => 최적화 자동으로됨!!!!
+    // (중요) => 이미지가 적다 => asset에 저장 // 이미지가 많다 => 다 asset에 저장시 메모리 과부화 위험 => public에 저장.
+
+    // npm run build => 배포용으로 여는거
+    
+  // 이게 public 폴더에 이미지 넣은 경우.
+   // <img src = {"/emotion1.png"}></img>
+   // <img src = {"/emotion2.png"}></img>
+   // <img src = {"/emotion3.png"}></img>
+   // <img src = {"/emotion4.png"}></img>
+   // <img src = {"/emotion5.png"}></img>
+  //</div>
+    
     <>
+    <div>
+    <img src = {getEmotionImage(1)}></img>
+    <img src = {getEmotionImage(2)}></img>
+    <img src = {getEmotionImage(3)}></img>
+    <img src = {getEmotionImage(4)}></img>
+    <img src = {getEmotionImage(5)}></img>
+    </div>
+
     <div>
       <Link to ={"/"}>Home</Link>
       <Link to ={"/new"}>New</Link>
