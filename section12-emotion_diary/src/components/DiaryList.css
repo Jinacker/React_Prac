@@ -1,0 +1,20 @@
+.DiaryList .menu_bar {
+    margin: 20px 0px;
+    display: flex;
+    gap: 10px;
+}
+
+.DiaryList .menu_bar select {
+    background-color: rgb(236, 236, 236);
+    border: none;
+    border-radius: 5px;
+
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.DiaryList .menu_bar button {
+    flex: 1; /* 최대한 늘어나게 설정*/
+    /* 색도 초록색으로 ..? => 이건 CSS에서 할 필요 업슴 => 컴포넌트에서 바로 type을 아까 해둔 POSITIVE로 하기. */
+}

@@ -1,9 +1,19 @@
-import { useSearchParams } from "react-router-dom"; // query string 사용법. => 뭔가 검색 기능에 쓰일것 같음.
+// Header / DIaray List / DIaryItem 컴포넌트로 구성됨
+import Header from "../components/Header";
+import Button from "../components/Button";
+import DiaryList from "../components/DiaryList";
+
 
 const Home = () => {
-    // ex) value = hello 로 넣었을때 이렇게 하면 hello가 출력됨.
-    const [params, setParams] = useSearchParams(); // state와 비슷
-    return <div>Home</div>
+    return (
+    <div>
+    <Header title = {"2024년 2월"} 
+    leftChild={<Button text = {"<"}></Button>}
+    rightChild={<Button text = {">"}></Button>}>
+    </Header>
+    <DiaryList></DiaryList>
+    </div>
+    );
 }
 
 export default Home;

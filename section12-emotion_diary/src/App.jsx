@@ -84,9 +84,7 @@ const onDelete = (id) => { //  매개 변수 아이디만 받음 => 삭제할때
   
   return ( // 기능을 만들었다면 => Context Provide로 모든 페이지에 공급해주자 !
     <>
-    <button onClick = {() => {onCreate(new Date().toTimeString(),1,"Hello")}}>일기 추가 테스트</button>
-    <button onClick = {() => {onUpdate(1, new Date().getTime(), 3, "수정된 페이지")}}>일기 수정 테스트</button>
-    <button onClick ={()=>{onDelete(1)}}>일기 삭제 테스트</button>
+
 
     <DiaryStateContext.Provider value={data}>
       <DiaryDispatchContext.Provider value = {{onCreate, onUpdate,onDelete}}>

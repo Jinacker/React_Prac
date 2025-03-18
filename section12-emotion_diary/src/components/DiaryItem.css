@@ -1,0 +1,66 @@
+.DiaryItem {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between; /*자식요소간 간격을 최대한 널찍히 떨어뜨려주는 그런 기능*/
+
+    padding: 15px 0px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.DiaryItem .img_section {   /* 이미지 섹션 기본값: 사진 크기 줄이고, 가운데로 정렬하는법*/
+    min-width: 120px;
+    height: 80px;
+
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    border-radius: 5px; /* 이렇게 모서리 둥글게 해서 디테일 추가*/
+}
+
+.DiaryItem .img_section > img { 
+    width: 50%;
+}
+
+/* 이런식으로 아까 동적으로 들어온 그거에 따라 각각의 색 조절 가능하게 만들기*/
+
+.DiaryItem .img_section_1 {
+    background-color: rgb(100,201,100);
+}
+
+.DiaryItem .img_section_2 {
+    background-color: rgb(157,215,114);
+}
+
+.DiaryItem .img_section_3 {
+    background-color: rgb(253,206,23);
+}
+
+.DiaryItem .img_section_4 {
+    background-color: rgb(253,132,70);
+}
+
+.DiaryItem .img_section_5 {
+    background-color: rgb(253,86,95);
+}
+
+
+.DiaryItem .info_section {
+    flex: 1;
+    cursor: pointer;
+
+}
+
+/* 자 이제, 일기 날짜랑 컨텐츠 + 수정 버튼 잘 꾸미기  */
+.DiaryItem .info_section .created_date {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.DiaryItem .info_section .content {
+    font-size: 18px;
+}
+
+.DiaryItem .button_section {
+    min-width: 70px;
+}
