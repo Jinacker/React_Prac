@@ -16,6 +16,7 @@ html, body {
     margin: 0px;
     width: 100%;
     background-color: rgb(246,246,246);
+    display: flex;
 }
 
 /* 리액트 앱에선 body 안에 root가 있어서 root 컴포넌트 수정시 메인 컴포넌트 수정가능*/
