@@ -13,18 +13,24 @@ import Edit from './pages/Edit.jsx';
 import Notfound from "./pages/Notfound.jsx";
 
 
-const mockData = [ // 임시 파일 
+const mockData = [ // 임시 파일 => 월별로 넘기기 위해 수정 => 날짜추가.
   {
   id: 1,
-  createDate: new Date().getTime(),
+  createDate: new Date("2025-3-18").getTime(),
   emotionId: 1,
   content: "1번 일기 내용",
   },
   {
     id: 2,
-    createDate: new Date().getTime(),
+    createDate: new Date("2025-3-17").getTime(),
     emotionId: 2,
     content: "2번 일기 내용",
+  },
+  {
+    id: 3,
+    createDate: new Date("2025-2-20").getTime(),
+    emotionId: 3,
+    content: "3번 일기 내용",
   }
 ];
 
@@ -40,8 +46,12 @@ function reducer(state, action){
 }
 
 // !!!!!! 마지막으로 지금 만든 기능들을 context로 모든 페이지에 바로 줄수있게 해주자 => 계층성 무시 ㄱ
-const DiaryStateContext = createContext(); // 얘는 데이터 전달 ex) 2번쨰 일기 내용 머머 이런거
-const DiaryDispatchContext = createContext(); // 얘네는 업데이트랑 크리에이트 딜리트 전달
+
+// 이제 월별로 필터링하는 기능을 구현해야함 => HOME 기능
+// 데이터 스테이트를 공급하는 다이어리 스테이트 context를 통해서 data state를 공급받아야함 => export 하자!
+
+export const DiaryStateContext = createContext(); // 얘는 데이터 전달 ex) 2번쨰 일기 내용 머머 이런거
+export const DiaryDispatchContext = createContext(); // 얘네는 업데이트랑 크리에이트 딜리트 전달
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData); // 아까만든 임시 파일 초기값으로 줌.
