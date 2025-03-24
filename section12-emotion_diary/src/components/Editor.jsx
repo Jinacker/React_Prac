@@ -1,7 +1,7 @@
 import "./Editor.css";
 import EmotionItem from "./Emotionitem";
 import Button from "./Button.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // 오늘의 날짜 입력 / 오늘의 감정 입력 / 오늘의 일기 입력 / 취소 및 저장 버튼 => 4개의 섹션
 
@@ -50,7 +50,7 @@ const emotionList = [ // 하나씩 설정해서 일일이 입력해주는건 안
 ///////////////////////
 
 
-const Editor = ({onSubmit}) => {
+const Editor = ({initData, onSubmit}) => {
     const emotionId = 5; //isSelected = {item.emotionId === emotionId} 이걸 넣어서 => 선택된 애 true => 이때만 스타일 넣도록 추가.
     
     const [input, setInput] = useState({ // state를 객체 형태로 나눠줘서, 여러개의 값을 input이라는 하나의 값으로 받음.
@@ -59,6 +59,16 @@ const Editor = ({onSubmit}) => {
         content: "",
     }); 
 
+    const nav = useNavigate();
+
+    useEffect(() => {
+        if(initData){
+            setInput({
+                ...initData, // createData 떄매 문제 생길수도.
+                createDate: new Date(Number(initData.createDate)), // 그래서 createData만 따로 ㅇㅇ + 혹시 모르니까 형변환
+            }) // 이럼 이제 초기값으로 잘된다!
+        }
+    },[initData]) // Effect 훅으로 뎁스속 initData 값 바뀌면 실행
 
     // 이벤트 헨들러 생성
     const onChangeInput = (e) => {
@@ -86,7 +96,7 @@ const Editor = ({onSubmit}) => {
         onSubmit(input);
     };
 
-    const nav = useNavigate(); // 취소하기 버튼용 라우터
+   // const nav = useNavigate(); // 취소하기 버튼용 라우터
 
     return (<div className = "Editor">
         <section className = "date_section">
