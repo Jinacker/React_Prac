@@ -1,0 +1,20 @@
+페이지 새로고침 => state 값 초기화 => 일기 데이터 초기화됨.
+초기화 안될라면 => 외부 데이터 베이스에 넣어야함. ex) mysql mongoDB
+
+우리가 사용할거 => Web Storage 웹 브라우저 내장 mongoDB
+웹 스토리지는 두개로 나뉜다.
+SessionStorage => 탭이 종료되기 전까지만 데이터 유지
+LocalStorage => 사이트 주소별로 데이터 보관 => 사용자가 삭제하기 전까지 영구 보관 => 우리가 쓸거.
+
+개발자 도구 => 어플리케이션에서 웹스토리지 저장 확인 가능.
+
+  // 로컬 스토리지 사용법
+  //localStorage.setItem('test', 'hello'); // key: value => key 값은 무조건 숫자나 문자열 타입으로만 넣을 수 있다.
+  //localStorage.setItem('person',JSON.stringify({name: "이정환"})); // 기본적으로 스트링값으로 저장하기 떄문에 => 객체 담을거면 저렇게 바꿔서 넣어야함.
+
+  // 저장된거 불러오기
+  //console.log(localStorage.getItem("test")); // 이렇게 key 값으로 불러오기
+  //console.log(JSON.parse(localStorage.getItem("test"))); // 객체 저장한건 객체모양 스트링이랑 parse 써서 변환 해서 가져오기. => undefined면 오류... 주의해서 쓰기.
+
+  // 값 삭제하기
+  //localStorage.removeItem("test");
