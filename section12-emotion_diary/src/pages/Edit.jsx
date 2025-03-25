@@ -7,14 +7,19 @@ import Button from "../components/Button";
 import Editor from "../components/Editor";
 import { useEffect, useContext, useState } from "react";
 import {DiaryDispatchContext, DiaryStateContext} from "../App";
+import useDiary from "../hooks/useDiary"; // 커스텀 훅으로 만든거 불러오기
 
 const Edit = () => {
     const params = useParams(); // 이제 수정하기 누르면, 기존의 일기의 저장된 값과 날짜가 뜨게 할거 => 지금은 작성된 날짜가 아니라 지금 날짜가 뜸
     const nav = useNavigate();
     
     const {onDelete, onUpdate} = useContext(DiaryDispatchContext); // App 컴포넌트에서 만든 onDelete context 가져오기 + onUpdate
-    const data = useContext(DiaryStateContext);
-    const [curDiaryItem, setCurDiaryItem] = useState(); // useEffect 결과물 담을 용도
+   
+
+    // 자 이제 이렇게 일기 내용 가져오는 거를 Diary 페이지에서도 써야되는데 => 이거 그대로 가져다쓴다? => 중복코드 비효율적임
+    // 그래서 이걸 커스텀 훅으로 만들거다! => 여기 안에 있던건 삭제
+
+    const curDiaryItem = useDiary(params.id); // 커스텀 훅 만든걸로 대체
 
     const onClickDelete = () => {
         if (window.confirm("일기를 정말 삭제할까요?")){ // 일기 삭제용 이벤트 핸들러
@@ -22,18 +27,6 @@ const Edit = () => {
             nav("/", {replace:true})
         }
     }
-
-    useEffect(()=>{
-        const currentDiaryItem =  data.find((item) => String(item.id) === String(params.id));
-
-        if (!currentDiaryItem) { // 일치하는 id의 페이지가 없으면 => 사용자가 잘못 들어간거
-            window.alert("존재하지 않는 일기입니다.") // 경고창 띄우기
-            nav("/", {replace:true}); // 홈페이지로 강제로 이동 => 작동 안됨 =? why? 컴포넌트가 마운트 안됐기 떄문. => 그 창 들어가자마자 바로 돌아가길 바랬기 때문임.
-        }; // => useEffect를 이용해야한다 => [] deps 설정 => 이거 바뀌면 리렌더링 되게 ㅇㅇ
-
-        setCurDiaryItem(currentDiaryItem); // id 존재시 그냥 그 아이디의 데이터를 반환
-    },[params.id]); // 노란줄은 그냥 무시 ㄱ // => deps에서 data 빼야 오류 사라짐. !!!!!!!!
-    // 이제 잘 작동한다 ~
 
     const onSubmit = (input) => { // 작성 완료 버튼 => onSubmit으로 Editor랑 연결됨.
         if(window.confirm("일기를 정말 수정할까요?")){
