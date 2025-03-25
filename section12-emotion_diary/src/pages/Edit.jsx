@@ -9,9 +9,13 @@ import { useEffect, useContext, useState } from "react";
 import {DiaryDispatchContext, DiaryStateContext} from "../App";
 import useDiary from "../hooks/useDiary"; // 커스텀 훅으로 만든거 불러오기
 
+import usePageTitle from "../hooks/usePageTitle"; // 페이지 이름 바꾸기 용 커스텀훅 불러오기
+
+
 const Edit = () => {
     const params = useParams(); // 이제 수정하기 누르면, 기존의 일기의 저장된 값과 날짜가 뜨게 할거 => 지금은 작성된 날짜가 아니라 지금 날짜가 뜸
     const nav = useNavigate();
+    usePageTitle(`${params.id}번 일기 수정`); // 이렇게 $ 써서 몇번일기 수정 타이틀 넣기.
     
     const {onDelete, onUpdate} = useContext(DiaryDispatchContext); // App 컴포넌트에서 만든 onDelete context 가져오기 + onUpdate
    

@@ -6,6 +6,8 @@ import DiaryList from "../components/DiaryList";
 import {useState, useContext} from "react";
 import { DiaryStateContext } from "../App";
 
+import usePageTitle from "../hooks/usePageTitle"; // 페이지 이름 바꾸기 용 커스텀훅 불러오기
+
 // 콜백 함수로 이번달에 해당되는 데이터만 불러와야함
 // 필터링 함수 작성.
 const getMonthlyData = (pivotDate, data) => { // 필터링을 만드려면 이번달이 시작되는 점과 끝 점을 알아야함.
@@ -25,6 +27,8 @@ const Home = () => {
     const [pivotDate, setPivotDate] = useState(new Date()); // 날짜 저장하는 state 생성. 현재 시간을 초기값으로 지정
     
     const monthlyData = getMonthlyData(pivotDate, data);
+
+    usePageTitle("감정 일기장");
 
     //state를 이용해 < 버튼 누르면 월 바뀌게 ㄱㄱ    
     //이를 위한 이벤트 핸들러 생성.

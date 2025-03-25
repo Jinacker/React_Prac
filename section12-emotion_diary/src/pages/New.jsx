@@ -5,13 +5,16 @@ import Button from "../components/Button";
 import Editor from "../components/Editor";
 import { useNavigate } from "react-router-dom"; // 실제로 뒤로 갈수있게 라우터 불러오기
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DiaryDispatchContext } from "../App";
+
+import usePageTitle from "../hooks/usePageTitle"; // 페이지 이름 바꾸기 용 커스텀훅 불러오기
 
 const New = () => { // 뒤로 가기 밖에 없어서 leftChild 
     const {onCreate} = useContext(DiaryDispatchContext);
     const nav = useNavigate();
     // nav 인수를 -1로 주면 페이지 뒤로감
+    usePageTitle("새 일기 쓰기"); // 그냥 이렇게 호출해서 title 넣어주기
 
     // 여기서 새로운 일기를 추가하는 함수를 만든 다음 넘겨준다. => Editor의 submit 함수에서 전달받은 인풋을 => context를 통해 앱 컴포넌트로부터 받아온 onCreate 통해서 새로운 일기 추가 !!!!!!
     const onSubmit = (input) => {onCreate(input.createDate.getTime(), input.emotionId, input.content);

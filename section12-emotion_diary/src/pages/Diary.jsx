@@ -7,9 +7,13 @@ import Viewer from "../components/Viewer";
 import useDiary from "../hooks/useDiary";
 import { getStringDate } from "../util/get-stringed-date";
 
+import usePageTitle from "../hooks/usePageTitle"; // 페이지 이름 바꾸기 용 커스텀훅 불러오기
+
+
 const Diary = () => {
     const params = useParams();
     const nav = useNavigate();
+    usePageTitle(`${params.id}번 일기`);
 
     const curDiaryItem = useDiary(params.id); // 최초 호출시 undefined 반환 => 그 후에 제대로된 내용 반환
     if (!curDiaryItem) { // undefined 일떄 대비
